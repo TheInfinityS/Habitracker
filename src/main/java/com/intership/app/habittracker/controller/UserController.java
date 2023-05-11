@@ -42,7 +42,7 @@ public class UserController {
 
     @PutMapping("/update")
     public User update(@RequestParam(value = "file",required = false) MultipartFile file,
-                       @RequestParam(value = "text",required = false) String username,
+                       @RequestParam(value = "username",required = false) String username,
                        @RequestHeader(name="Authorization") String authorizationHeader) throws IOException {
         User user=customUserService.getFromAuthentication(authorizationHeader);
         return customUserService.update(file,username,user);

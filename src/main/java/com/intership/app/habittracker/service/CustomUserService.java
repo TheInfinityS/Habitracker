@@ -97,6 +97,7 @@ public class CustomUserService {
     }
 
     public User update(MultipartFile file, String username, User user) throws IOException {
+        System.out.println(username);
         if(file!=null){
             File uploadDir=new File(uploadPath);
             if(!uploadDir.exists())
