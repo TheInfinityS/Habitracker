@@ -1,0 +1,54 @@
+spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: infinityitf@gmail.com
+    password: ${emailPassword}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  security:
+    oauth2:
+      resource:
+        preferTokenInfo: true
+      client:
+        clientAuthenticationScheme: form
+        registration:
+          google:
+            clientId: 937663415556-429cod4cga1n2j9lnc0ts9qo69nfadc7.apps.googleusercontent.com
+            clientSecret: ${googleClientSecret}
+            scope:
+              - openid
+              - email
+              - profile
+  jackson:
+    date-format: yyyy-MM-dd
+  datasource:
+    url: jdbc:postgresql://localhost:5432/habittracker
+    username: postgres
+    password: ${dbSecret}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    generate-ddl: true
+    database: postgresql
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL95Dialect
+        jdbc:
+          lob:
+            non_contextual_creation: true
+hibernate:
+  cache:
+    use_second_level_cache: true
+    region:
+      factory_class: org.hibernate.cache.ehcache.EhCacheRegionFactory
+app:
+  auth:
+    tokenSecret: 51655368566D597133743677397A24432646294A404E635266556A576E5A7234
+    tokenExpirationMsec: 3600000
+    refreshTokenExpirationMsec: 2592000000
