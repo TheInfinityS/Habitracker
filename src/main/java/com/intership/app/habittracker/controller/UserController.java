@@ -5,6 +5,9 @@ import com.intership.app.habittracker.service.AuthService;
 import com.intership.app.habittracker.service.CustomUserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @RestController
 @RequestMapping("user")
@@ -35,5 +38,13 @@ public class UserController {
     public User changePassword(@RequestBody String newPassword,@RequestHeader(name="Authorization") String authorizationHeader){
         User user=customUserService.getFromAuthentication(authorizationHeader);
         return customUserService.changePassword(newPassword,user);
+    }
+
+    @PutMapping("/update")
+    public User update(@RequestParam(value = "file",required = false) MultipartFile file,
+                       @RequestParam(value = "text",required = false) String username,
+                       @RequestHeader(name="Authorization") String authorizationHeader) throws IOException {
+        User user=customUserService.getFromAuthentication(authorizationHeader);
+        return customUserService.update(file,username,user);
     }
 }

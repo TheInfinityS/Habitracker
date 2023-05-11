@@ -5,9 +5,13 @@ import com.intership.app.habittracker.entity.User;
 import com.intership.app.habittracker.resository.UserRepository;
 import com.intership.app.habittracker.security.jwt.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.UUID;
 
 @Service
@@ -16,6 +20,9 @@ public class CustomUserService {
     private final EmailService emailService;
 
     private final JwtService jwtService;
+
+    @Value("${upload.path}")
+    private String uploadPath;
 
     @Autowired
     public CustomUserService(UserRepository userRepository, EmailService emailService, JwtService jwtService) {
@@ -86,6 +93,22 @@ public class CustomUserService {
     public User changePassword(String newPassword, User user) {
         user.setPassword(newPassword);
         user.setChangablePassword(false);
+        return userRepository.save(user);
+    }
+
+    public User update(MultipartFile file, String username, User user) throws IOException {
+        if(file!=null){
+            File uploadDir=new File(uploadPath);
+            if(!uploadDir.exists())
+                uploadDir.mkdir();
+            String uuidFile = UUID.randomUUID().toString();
+            String fileName = uuidFile + "." + file.getOriginalFilename();
+            file.transferTo(new File(uploadPath+"/"+fileName));
+            user.setIcon(fileName);
+        }
+        if(username!=null){
+            user.setUsername(username);
+        }
         return userRepository.save(user);
     }
 }

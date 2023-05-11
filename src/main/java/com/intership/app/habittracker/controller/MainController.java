@@ -32,7 +32,7 @@ public class MainController {
     }
 
     @GetMapping
-    public String main(Model model, @RequestHeader(name="Authorization") String authorizationHeader){
+    public String main(Model model, @RequestHeader(name="Authorization",required = false) String authorizationHeader){
         if(authorizationHeader!=null){
             User user=customUserService.getFromAuthentication(authorizationHeader);
             List<Habit> habits=habitService.getList(user);

@@ -52,3 +52,5 @@ app:
     tokenSecret: 51655368566D597133743677397A24432646294A404E635266556A576E5A7234
     tokenExpirationMsec: 3600000
     refreshTokenExpirationMsec: 2592000000
+upload:
+  path: /D:/icon
