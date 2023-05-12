@@ -55,16 +55,17 @@ public class HabitService {
             if(habit.getHabitData().get(localDate)!=null){
                 reps+=habit.getHabitData().get(localDate);
             }
+            if(habit.getHabitData().get(localDate)==null){
+                if(localDate.equals(habit.getEndDate())){
+                    int point= user.getPoint()+100;
+                    if(habit.getRepetitionRate()==habit.getRepetitionsPerDay())
+                        point+=50;
+                    user.setPoint(point);
+                    customUserService.setPoint(user);
+                }
+            }
             habit.getHabitData().put(localDate,reps);
             habit.setRepetitionRate(repsRate(habit,localDate));
-            if(localDate.equals(habit.getEndDate())){
-                int point= user.getPoint()+100;
-                if(habit.getRepetitionRate()==habit.getRepetitionsPerDay())
-                    point+=50;
-                user.setPoint(point);
-                customUserService.setPoint(user);
-            }
-
             return habitRepository.save(habit);
         }
         return habit;
