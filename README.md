@@ -1,5 +1,7 @@
 # Habit Tracker
 Habit tracker следит за прогрессом и формированием привычек.
+Для просмтра кода можете выбрать два репозитория:
+##[Микросервесный](https://github.com/SKozhomberdiev/HabitTracker1.git) и [Монолитный](https://github.com/TheInfinityS/Habitracker)
 
 В функцианал приложения входит:
 + Авторизация Пользователя**
