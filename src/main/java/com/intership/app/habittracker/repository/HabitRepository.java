@@ -1,4 +1,4 @@
-package com.intership.app.habittracker.resository;
+package com.intership.app.habittracker.repository;
 
 import com.intership.app.habittracker.entity.Habit;
 import com.intership.app.habittracker.entity.User;

@@ -2,7 +2,7 @@ package com.intership.app.habittracker.service;
 
 import com.intership.app.habittracker.entity.Habit;
 import com.intership.app.habittracker.entity.User;
-import com.intership.app.habittracker.resository.HabitRepository;
+import com.intership.app.habittracker.repository.HabitRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

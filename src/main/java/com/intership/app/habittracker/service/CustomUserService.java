@@ -2,7 +2,7 @@ package com.intership.app.habittracker.service;
 
 import com.intership.app.habittracker.entity.EmailDetails;
 import com.intership.app.habittracker.entity.User;
-import com.intership.app.habittracker.resository.UserRepository;
+import com.intership.app.habittracker.repository.UserRepository;
 import com.intership.app.habittracker.security.jwt.JwtService;
 import com.intership.app.habittracker.web.dto.auth.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;

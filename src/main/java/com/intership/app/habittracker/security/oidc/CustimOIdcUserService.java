@@ -2,7 +2,7 @@ package com.intership.app.habittracker.security.oidc;
 
 import com.intership.app.habittracker.entity.User;
 import com.intership.app.habittracker.exception.OidcAuthenticationProcessingException;
-import com.intership.app.habittracker.resository.UserRepository;
+import com.intership.app.habittracker.repository.UserRepository;
 import com.intership.app.habittracker.security.UserPrincipal;
 import com.intership.app.habittracker.service.CustomUserService;
 import org.springframework.beans.factory.annotation.Autowired;

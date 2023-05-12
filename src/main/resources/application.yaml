@@ -29,7 +29,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/habittracker
     username: postgres
-    password: ${dbSecret}
+    password: 123
     driver-class-name: org.postgresql.Driver
   jpa:
     generate-ddl: true

@@ -19,8 +19,6 @@ import java.util.List;
 @RequestMapping("/")
 public class MainController {
 
-    @Value("${spring.profiles.active}")
-    private String profile;
     private final HabitService habitService;
 
     private final CustomUserService customUserService;
@@ -43,7 +41,6 @@ public class MainController {
             model.addAttribute("habits",new ArrayList<Habit>());
             model.addAttribute("profile",null);
         }
-        model.addAttribute("isDevMode","dev".equals(profile));
         return "index";
     }
 }

@@ -1,4 +1,4 @@
-package com.intership.app.habittracker.resository;
+package com.intership.app.habittracker.repository;
 
 import com.intership.app.habittracker.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
