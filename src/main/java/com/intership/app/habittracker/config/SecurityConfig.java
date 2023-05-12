@@ -61,7 +61,7 @@ public class SecurityConfig {
                     httpSecurityExceptionHandlingConfigurer.accessDeniedHandler(restAccessDeniedHandler);
                 })
                 .authorizeRequests(request->{
-                    request.requestMatchers("/","/auth/**", "/user/activate/**","/js/**", "/error**").permitAll();
+                    request.requestMatchers("/","/auth/**", "/user/activate/**","/user/changePassword/**","/js/**", "/error**").permitAll();
                     request.anyRequest().authenticated();
                 })
                 .oauth2Login(httpSecurityOAuth2LoginConfigurer -> {

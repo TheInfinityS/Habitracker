@@ -47,19 +47,6 @@ public class AuthService {
         return getTokenResponse(authentication);
     }
 
-    public ResponseEntity<?> authenticate(User user){
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        user.getEmail(),
-                        user.getPassword()
-                )
-        );
-
-        user.setActivationCode(null);
-        user.setChangablePassword(true);
-
-        return getTokenResponse(authentication);
-    }
 
     public ResponseEntity<?>  getTokenResponse(Authentication authentication){
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -112,4 +99,7 @@ public class AuthService {
                 .body(new ApiResponse(true, "User registered successfully@"));
     }
 
+    public String encryptPassword(String newPassword) {
+        return passwordEncoder.encode(newPassword);
+    }
 }

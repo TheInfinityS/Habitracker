@@ -25,19 +25,21 @@ public class UserController {
     @PostMapping("/activate/changePassword")
     public User activateChangePassword(@RequestHeader(name="Authorization") String authorizationHeader){
         User user=customUserService.getFromAuthentication(authorizationHeader);
-        return customUserService.activeChangePassword(user);
+        return customUserService.activateChangePassword(user);
     }
 
     @GetMapping("/activate/{code}")
     public ResponseEntity<?> activeChangePassword(@PathVariable String code){
         User user=customUserService.getByActivationCode(code);
-        return authService.authenticate(user);
+        return customUserService.activeChangePassword(user);
     }
 
-    @PostMapping("/changePassword")
-    public User changePassword(@RequestBody String newPassword,@RequestHeader(name="Authorization") String authorizationHeader){
-        User user=customUserService.getFromAuthentication(authorizationHeader);
-        return customUserService.changePassword(newPassword,user);
+    @PostMapping("/changePassword/{code}")
+    public ResponseEntity<?> changePassword(@RequestBody String newPassword,@PathVariable String code){
+        System.out.println(newPassword);
+        String password=authService.encryptPassword(newPassword);
+        User user=customUserService.getByActivationCode(code);
+        return customUserService.changePassword(password,user);
     }
 
     @PutMapping("/update")

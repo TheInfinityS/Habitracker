@@ -4,8 +4,10 @@ import com.intership.app.habittracker.entity.EmailDetails;
 import com.intership.app.habittracker.entity.User;
 import com.intership.app.habittracker.resository.UserRepository;
 import com.intership.app.habittracker.security.jwt.JwtService;
+import com.intership.app.habittracker.web.dto.auth.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -61,7 +63,7 @@ public class CustomUserService {
         return true;
     }
 
-    public User activeChangePassword(User user) {
+    public User activateChangePassword(User user) {
         if(user.getEmailVerified()){
             user.setActivationCode(UUID.randomUUID().toString());
             User result = save(user);
@@ -90,10 +92,13 @@ public class CustomUserService {
         return getByEmail(email);
     }
 
-    public User changePassword(String newPassword, User user) {
+    public ResponseEntity<?> changePassword(String newPassword, User user) {
         user.setPassword(newPassword);
         user.setChangablePassword(false);
-        return userRepository.save(user);
+        user.setActivationCode(null);
+        userRepository.save(user);
+        return ResponseEntity
+                .ok(new ApiResponse(true, "Password was success changed"));
     }
 
     public User update(MultipartFile file, String username, User user) throws IOException {
@@ -111,5 +116,11 @@ public class CustomUserService {
             user.setUsername(username);
         }
         return userRepository.save(user);
+    }
+
+    public ResponseEntity<?> activeChangePassword(User user) {
+        user.setChangablePassword(true);
+        return ResponseEntity
+                .ok(new ApiResponse(true, "You can change password"));
     }
 }
