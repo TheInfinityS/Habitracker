@@ -123,4 +123,8 @@ public class CustomUserService {
         return ResponseEntity
                 .ok(new ApiResponse(true, "You can change password"));
     }
+
+    public void setPoint(User user) {
+        userRepository.save(user);
+    }
 }

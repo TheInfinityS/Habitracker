@@ -15,10 +15,13 @@ import java.util.Map;
 public class HabitService {
     private final HabitRepository habitRepository;
 
+    private final CustomUserService customUserService;
+
 
     @Autowired
-    public HabitService(HabitRepository habitRepository) {
+    public HabitService(HabitRepository habitRepository, CustomUserService customUserService) {
         this.habitRepository = habitRepository;
+        this.customUserService = customUserService;
     }
 
     public Habit create(User user, Habit habit) {
@@ -53,14 +56,22 @@ public class HabitService {
                 reps+=habit.getHabitData().get(localDate);
             }
             habit.getHabitData().put(localDate,reps);
-            habit.setRepetitionRate(repsRate(habit));
+            habit.setRepetitionRate(repsRate(habit,localDate));
+            if(localDate.equals(habit.getEndDate())){
+                int point= user.getPoint()+100;
+                if(habit.getRepetitionRate()==habit.getRepetitionsPerDay())
+                    point+=50;
+                user.setPoint(point);
+                customUserService.setPoint(user);
+            }
+
             return habitRepository.save(habit);
         }
         return habit;
     }
 
-    public int repsRate(Habit habit){
-        int size=habit.getHabitData().size();
+    public int repsRate(Habit habit,LocalDate localDate){
+        int size=localDate.getDayOfMonth()-habit.getStartDate().getDayOfMonth();
         int total=totalReps(habit);
         return total/size;
     }
