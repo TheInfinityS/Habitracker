@@ -2,12 +2,15 @@ package com.intership.app.habittracker.service;
 
 import com.intership.app.habittracker.entity.Habit;
 import com.intership.app.habittracker.entity.User;
+import com.intership.app.habittracker.exception.AccessDeniedException;
 import com.intership.app.habittracker.repository.HabitRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,12 +38,12 @@ public class HabitService {
     }
 
     public Habit update(Habit habitFromDb, Habit habit,User user) {
-        if(user.equals(habit.getProfile())){
+        if(user.equals(habitFromDb.getProfile())){
             habit.setProfile(user);
             BeanUtils.copyProperties(habit,habitFromDb,"id");
             return habitRepository.save(habitFromDb);
         }
-        return habitFromDb;
+        throw new AccessDeniedException();
     }
 
     public void delete(Habit habit,User user) {
@@ -68,11 +71,12 @@ public class HabitService {
             habit.setRepetitionRate(repsRate(habit,localDate));
             return habitRepository.save(habit);
         }
-        return habit;
+        throw  new AccessDeniedException();
     }
 
     public int repsRate(Habit habit,LocalDate localDate){
-        int size=localDate.getDayOfMonth()-habit.getStartDate().getDayOfMonth();
+        int size= (int)ChronoUnit.DAYS.between(habit.getStartDate(),localDate)+1;
+        //int size=localDate.getDayOfMonth()-habit.getStartDate().getDayOfMonth();
         int total=totalReps(habit);
         return total/size;
     }
